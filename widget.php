@@ -112,6 +112,10 @@ class NZPlayer_Widget extends WP_Widget {
 <label for="<?php echo $this->get_field_id('libdir'); ?>"><?php _e('Library Path:'); ?></label>
 	<input class="widefat" id="<?php echo $this->get_field_id('libdir'); ?>" name="<?php echo $this->get_field_name('libdir'); ?>" type="text" value="<?php echo esc_attr($libdir); ?>" />
 </p>
+<label for="<?php echo $this->get_field_id('default-cover'); ?>"><?php _e('Default Cover File Path:'); ?></label>
+<input class="widefat" id="<?php echo $this->get_field_id('default-cover'); ?>" name="<?php echo $this->get_field_name('default-cover'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
+<p>
+</p>
 <p>
 <input class="checkbox" type="checkbox" id="" name="">
 <label for="<?php echo $this->get_field_id('autoplay'); ?>"><?php _e('Autoplay:'); ?></label>

@@ -15,6 +15,7 @@ NZPlayer is a beautiful music player
 Major new features in NZPlayer 1.1 include:
 
 * float player controller bar
+* default-cover support for per dir
 
 === Installation ===
 
