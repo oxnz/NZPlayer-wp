@@ -232,8 +232,13 @@ function mediainfo($fpath) {
 				$cover .= $suffix;
 			}
 		}
-		if ('.' == substr($cover, -1)) {
-			$cover = dirname($fpath) . '/default-cover.png';
+		if ('.' == substr($cover, -1)) { // cover not exist
+			foreach (array("png", "jpg", "jpeg", "gif") as $suffix) {
+				$candidate = dirname($fpath) . '/default-cover.' . $suffix;
+				if (file_exists($candidate)) {
+					$cover = $candidate;
+				}
+			}
 		}
 		$fp = fopen($fpath, "r");
 		fseek($fp, filesize($fpath)-128);
