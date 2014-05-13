@@ -34,15 +34,26 @@ jQuery(document).ready(function ($) {
 	 */
 	width = 340; // critical value
 	$(window).resize(function (e) {
-		if ($('#nzplayer').width() < width) {
-			//$('#nzplayer').attr("class", "adjusted");
-			pos = nzpc.offset().top;
-			nzpc.width(nzpc.parent().width());
-		} else {
-			//$('#nzplayer').attr("class", "original");
-			pos = nzpc.offset().top;
-			nzpc.width(nzpc.parent().width());
+		w = $('#nzplayer').width();
+		if (w < width) { // become narrow
+			$('#nzplayer').attr("class", "adjusted");
+			$('.cover > #cover').width(w);
+			$('.cover > #cover').height(w);
+			$('#nzplayer > .track').css({
+				width: w,
+				height: w+1, // border 1px
+			});
+		} else { // become wider
+			$('#nzplayer').attr("class", "original");
+			$('.cover > #cover').width(150);
+			$('.cover > #cover').height(150);
+			$('#nzplayer > .track').css({
+				width: "",
+				height: "",
+			});
 		}
+		nzpc.width(nzpc.parent().width());
+		pos = nzpc.offset().top;
 	});
 	$(window).resize();
 
