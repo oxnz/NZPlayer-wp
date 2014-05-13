@@ -33,11 +33,6 @@ class NZPlayer_Widget extends WP_Widget {
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'playlist' => $this->playlist(0),
 	   	));
-		/*
-		wp_localize_script('nzplayer-widget', 'NZPlayList',
-			$this->playlist(0));
-		wp_localize_script('nzplayer-widget', 'NZPlayIndex', "0");
-		 */
 	}
 
 	function findmedia($path, $url) {
