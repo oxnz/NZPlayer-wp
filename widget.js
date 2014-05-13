@@ -234,7 +234,6 @@ jQuery(document).ready(function ($) {
 						nzpc.playlist = JSON.parse(response);
 						nzpc.playindex = (optname == "next") ?
 							0 : nzpc.playlist.length - 1;
-						console.log(optname + "________>:" + nzpc.playindex);
 						audio.src = nzpc.playlist[nzpc.playindex]['source'];
 						audio.play();
 						break;
@@ -294,14 +293,6 @@ jQuery(document).ready(function ($) {
 	 */
 	$('.toolbar > #volbar').click(function (e) {
 		audio.volume = e.offsetX/$('#volbar').width();
-		/*
-		$('.volbar > .barval').width({
-			width: "20%"
-		});
-		console.log('width:' + $('.toolbar > #volume').width());
-		console.log('vol:' + $('.volbar > .barval').width());
-		audio.volume = 0.7;
-		*/
 	});
 	$('.toolbar > #heart').toggle(function () {
 		$('#heart > span').attr("class", "fa fa-heart-o fa-lg fa-fw");
