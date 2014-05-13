@@ -2,10 +2,11 @@ jQuery(document).ready(function ($) {
 	/*
 	 * controller fixed when scroll after itself
 	 */
+	nzpcw = $('#nzplayer-controller-wrapper');
 	nzpc = $('#nzplayer-controller');
 	$('#nzplayer-controller-wrapper').height($(nzpc).height());
 	fixed = false;
-	pos = nzpc.offset().top;
+	pos = nzpcw.offset().top;
 	$(window).scroll(function () {
 		if ($(this).scrollTop() > pos) {
 		   	if (false == fixed) {
@@ -53,7 +54,7 @@ jQuery(document).ready(function ($) {
 			});
 		}
 		nzpc.width(nzpc.parent().width());
-		pos = nzpc.offset().top;
+		pos = nzpcw.offset().top;
 	});
 	$(window).resize();
 
@@ -146,7 +147,7 @@ jQuery(document).ready(function ($) {
 				break;
 		}
 		duration.innerText = errmsg;
-		pos = nzpc.offset().top; // errmsg would overflow
+		pos = nzpcw.offset().top; // errmsg would overflow
 	}, false);
 	audio.addEventListener('loadeddata', function (event) {
 		console.log(event.type);
@@ -161,7 +162,7 @@ jQuery(document).ready(function ($) {
 		timesep.innerText = "/";
 		audio.play();
 		//  title and other media info would wrap-line, so update the pos
-		pos = nzpc.offset().top;
+		pos = nzpcw.offset().top;
 	}, false);
 	audio.addEventListener('loadstart', function (event) {
 		console.log(event.type);
