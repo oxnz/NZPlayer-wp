@@ -189,7 +189,7 @@ jQuery(document).ready(function ($) {
 		console.log(event.type);
 	}, false);
 	audio.addEventListener('stalled', function (event) {
-		curtime.innerHTML = '<span class="fa fa-exclamation fa-fw"></span>';
+		curtime.innerHTML = '<span class="fa fa-exclamation-triangle fa-fw"></span>';
 	}, false);
 	audio.addEventListener('suspend', function (event) {
 		// this would cause flash screen
