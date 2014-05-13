@@ -159,8 +159,7 @@ class NZPlayer_Widget extends WP_Widget {
 ?>
 		<div id="nzplayer" class="original">
 			<div class="track">
-				<div class="cover"><img id="cover" class="cover-pic" src="<?php echo get_stylesheet_directory_uri(); ?>/img/logo.png">
-				</div>
+				<div class="cover"><img id="cover" class="cover-pic"></div>
 				<div class="info">
 					<ul>
 						<li id="track-title">No music available</li>
