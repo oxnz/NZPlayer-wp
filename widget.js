@@ -4,6 +4,9 @@ jQuery(document).ready(function ($) {
 	 */
 	nzpcw = $('#nzplayer-controller-wrapper');
 	nzpc = $('#nzplayer-controller');
+	if (null == document.getElementById("nzplayer-controller-wrapper")) {
+		return; // if nzplayer not exist on this page
+	}
 	$('#nzplayer-controller-wrapper').height($(nzpc).height());
 	fixed = false;
 	pos = nzpcw.offset().top;
@@ -202,6 +205,7 @@ jQuery(document).ready(function ($) {
 		curtime.innerText = strtime(audio.currentTime);
 	}, false);
 	audio.addEventListener('volumechange', function (event) {
+		console.log("--> volumechage: " + audio.volume);
 		$('#volbar > .barval').width($('#volbar').width() * audio.volume);
 		mute = $('#mute > span');
 		if (0.5 > audio.volume) { // low volume
@@ -255,11 +259,11 @@ jQuery(document).ready(function ($) {
 	/*
 	 * toggle play/pause
 	 */
-	$('#play > span').toggle(function() {
+	$('#play > span').toggle(function(e) {
 		$(this).attr("class", "fa fa-play fa-lg fa-fw");
 		audio.pause();
 	},
-	function () {
+	function (e) {
 		$(this).attr("class", "fa fa-pause fa-lg fa-fw");
 		audio.play();
 	});
@@ -309,28 +313,46 @@ jQuery(document).ready(function ($) {
 	});
 
 	/*
-	 * keyboard shortcuts
+	 * nzplayer keyboard shortcuts
 	 */
-	/*
-	$(window).keypress(function(e) {
-		console.log(e.which + ':' + e.keyCode);
-		switch (e.keyCode) {
-			case 32:
-				console.log("pause");
-				console.log(e.target);
-				x = e;
-				return true;
+	window.onkeydown = function(e) {
+		var obj = e.srcElement ? e.srcElement : e.target;
+		if ("body" != obj.tagName.toLowerCase())
+			return; // not targeted at controller, maybe input
+		var key = e.keyCode || e.which || e.charCode;
+		var audiostep = 0.15; // audio volume adjust step size
+		switch (key) {
+			case 32: // space
+				$('#play > span').trigger("click");
+				e.preventDefault();
+				break;
+			case 37: // left arrow
+				e.preventDefault();
+				$('.toolbar > #backward').trigger("click");
+				break;
+			case 39: // right arrow
+				$('.toolbar > #forward').trigger("click");
+				e.preventDefault();
+				break;
+			case 189: // '-', volume down
+				if (audio.volume > audiostep) {
+					audio.volume -= audiostep;
+				} else {
+					audio.volume = 0;
+					audio.muted = true;
+				}
+				break;
+			case 187: // '+', volume up
+				if (true == audio.muted)
+					audio.muted = false;
+				if (audio.volume + audiostep < 1) {
+					audio.volume += audiostep;
+				} else {
+					audio.volume = 1;
+				}
+				break;
+			default: // do nothing
+				break;
 		}
-		return;
-	});
-	z = document.getElementById("toolbar");
-	z.addEventListener('keypress', function(e) {
-		console.log(e.keyCode);
-	});
-	z.addEventListener('click', function(e) {
-		console.log('clicked detected');
-	});
-	*/
-
+	}
 });
-
