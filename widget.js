@@ -228,13 +228,22 @@ jQuery(document).ready(function ($) {
 			nzpc.ajaxurl,
 			{ action: 'nzplayer_ctl', option: optname },
 			function(response) {
-				console.log("response: " + response);
-				nzpc.playlist = JSON.parse(response);
+				switch (optname) {
+					case "next":
+					case "prev":
+						nzpc.playlist = JSON.parse(response);
+						nzpc.playindex = (optname == "next") ?
+							0 : nzpc.playlist.length - 1;
+						console.log(optname + "________>:" + nzpc.playindex);
+						audio.src = nzpc.playlist[nzpc.playindex]['source'];
+						audio.play();
+						break;
+					default:
+						console.log("unknow request");
+						break;
+				}
 			}
 		);
-		nzpc.palyindex = (optname == "prev") ? nzpc.playlist.length-1 : 0;
-		audio.src = nzpc.playlist[nzpc.playindex]['source'];
-		audio.play();
 	}
 	$('.toolbar > #backward').click(function () {
 		if (0 < nzpc.playindex) {
