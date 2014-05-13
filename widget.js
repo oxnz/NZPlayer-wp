@@ -102,7 +102,7 @@ jQuery(document).ready(function ($) {
 		console.log(event.type);
 	}, false);
 	audio.addEventListener('durationchange', function (event) {
-		console.log(event.type);
+		duration.innerText = strtime(audio.duration);
 	}, false);
 	audio.addEventListener('emptied', function (event) {
 		console.log(event.type);
@@ -111,8 +111,31 @@ jQuery(document).ready(function ($) {
 		console.log(event.type);
 		$('#forward').click();
 	}, false);
-	audio.addEventListener('error', function (event) {
-		console.log(event.type);
+	audio.addEventListener('error', function (e) {
+		curtime.innerHTML = '<span class="fa fa-warning fa-fw"></span>';
+		timesep.innerText = " ";
+		switch (audio.error.code) {
+			case audio.error.MEDIA_ERR_ABORTED:
+				errmsg = "aborted";
+				break;
+			case audio.error.MEDIA_ERR_NETWORK:
+				errmsg = "network error";
+				break;
+			case audio.error.MEDIA_ERR_DECODE:
+				errmsg = "decode error";
+				break;
+			case audio.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+				errmsg = "media source not supported";
+				break;
+			case audio.error.MEDIA_ERR_ENCRYPTED:
+				errmsg = "media is encrypted";
+				break;
+			default:
+				errmsg = "unknown error";
+				break;
+		}
+		duration.innerText = errmsg;
+		pos = nzpc.offset().top; // errmsg would overflow
 	}, false);
 	audio.addEventListener('loadeddata', function (event) {
 		console.log(event.type);
@@ -142,7 +165,8 @@ jQuery(document).ready(function ($) {
 		console.log(event.type);
 	}, false);
 	audio.addEventListener('progress', function (event) {
-		console.log(event.type);
+		// this would cause flash screen
+		//curtime.innerHTML = '<span class="fa fa-spinner fa-fw fa-spin"></span>';
 	}, false);
 	audio.addEventListener('retechange', function (event) {
 		console.log(event.type);
@@ -154,10 +178,11 @@ jQuery(document).ready(function ($) {
 		console.log(event.type);
 	}, false);
 	audio.addEventListener('stalled', function (event) {
-		console.log(event.type);
+		curtime.innerHTML = '<span class="fa fa-exclamation fa-fw"></span>';
 	}, false);
 	audio.addEventListener('suspend', function (event) {
-		console.log(event.type);
+		// this would cause flash screen
+		//curtime.innerHTML = '<span class="fa fa-spinner fa-fw fa-spin"></span>';
 	}, false);
 	audio.addEventListener('timeupdate', function (event) {
 		$('#seekbar > #position').width(
@@ -177,7 +202,7 @@ jQuery(document).ready(function ($) {
 		}
 	}, false);
 	audio.addEventListener('waiting', function (event) {
-		console.log(event.type);
+		curtime.innerHTML = '<span class="fa fa-spinner fa-fw fa-spin"></span>';
 	}, false);
 
 	/*
@@ -270,6 +295,30 @@ jQuery(document).ready(function ($) {
 	$('#nzplayer-controller > #seekbar').click(function (event) {
 		audio.currentTime = audio.duration*event.offsetX/$('#seekbar').width();
 	});
+
+	/*
+	 * keyboard shortcuts
+	 */
+	/*
+	$(window).keypress(function(e) {
+		console.log(e.which + ':' + e.keyCode);
+		switch (e.keyCode) {
+			case 32:
+				console.log("pause");
+				console.log(e.target);
+				x = e;
+				return true;
+		}
+		return;
+	});
+	z = document.getElementById("toolbar");
+	z.addEventListener('keypress', function(e) {
+		console.log(e.keyCode);
+	});
+	z.addEventListener('click', function(e) {
+		console.log('clicked detected');
+	});
+	*/
 
 });
 
